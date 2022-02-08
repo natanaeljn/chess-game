@@ -1,10 +1,10 @@
 package boardgame;
 
-public class piece  extends position{
+public class piece  {
 	protected position position;
 	private board board;
 	public piece(boardgame.board board) {
-		super();
+		
 		this.board = board;
 	}
 	protected board getBoard() {
