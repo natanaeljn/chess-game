@@ -1,8 +1,13 @@
 package applicaition;
 
+import java.util.Arrays;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import chess.chessmatch;
 import chess.chesspiece;
 import chess.chessposition;
 import chess.color;
@@ -53,7 +58,14 @@ public class UI {
 	
 	
 	
-	
+	public static void printMatch(chessmatch chessmatch,List<chesspiece>captured) {
+		printBoard(chessmatch.getPieces());
+		System.out.println();
+		printCapturedPieces(captured);
+		System.out.println();
+		System.out.println("turn:"+ chessmatch.getTurn());
+		System.out.println("waiting player : "+chessmatch.getCurrentPlayer());
+	}
 	
 	
 	
@@ -67,17 +79,35 @@ public class UI {
 		for (int i = 0; i < pieces.length; i++) {
 			System.out.print((8 - i) + " ");
 			for (int j = 0; j < pieces.length; j++) {
-				printPiece(pieces[i][j]);
+				printPiece(pieces[i][j],false);
 			}
 			System.out.println();
 		}
 		System.out.println("  a  b  c  d  e  f  g  h");
 
 	}
+	
+	public static void printBoard(chesspiece[][] pieces,boolean[][]possibleMoves) {
+		for (int i = 0; i < pieces.length; i++) {
+			System.out.print((8 - i) + " ");
+			for (int j = 0; j < pieces.length; j++) {
+				printPiece(pieces[i][j],possibleMoves[i][j]);
+			}
+			System.out.println();
+		}
+		System.out.println("    a  b  c  d  e  f  g  h");
 
-	private static void printPiece(chesspiece piece) {
+	}
+	
+
+	private static void printPiece(chesspiece piece,boolean background) {
+		if(background) {
+			System.out.print(ANSI_BLUE_BACKGROUND);
+		}
+		
+		
 		if (piece == null) {
-			System.out.print("-");
+			System.out.print("-"+ANSI_RESET);
 		}
 		else {
 			System.out.print(piece);
@@ -95,5 +125,19 @@ public class UI {
             }
         }
         System.out.print(" ");
+	}
+	private static void printCapturedPieces(List<chesspiece>captured) {
+		List<chesspiece >white = captured.stream().filter(x ->x.getColor()==color.WHITE).collect(Collectors.toList());
+		List<chesspiece >black = captured.stream().filter(x ->x.getColor()==color.BLACK).collect(Collectors.toList());
+	    System.out.println("Captured pieces:");
+	    System.out.println("white:");
+	    System.out.print(ANSI_WHITE);
+	    System.out.println(Arrays.toString(white.toArray()));
+	    System.out.println(ANSI_RESET);
+	    System.out.println("black:");
+	    System.out.print(ANSI_YELLOW);
+	    System.out.println(Arrays.toString(black.toArray()));
+	    System.out.println(ANSI_RESET);
+	    
 	}
 }
