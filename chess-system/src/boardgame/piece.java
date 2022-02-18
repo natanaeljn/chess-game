@@ -4,7 +4,7 @@ public abstract class piece {
 	protected position position;
 	private board board;
 
-	public piece(boardgame.board board) {
+	public piece(board board) {
 
 		this.board = board;
 	}

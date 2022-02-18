@@ -8,7 +8,7 @@ public class chessposition {
 	private int row;
 
 	public chessposition(char column, int row) {
-		if (column < 'a' || column > 'h' || row > 8) {
+		if (column < 'a' || column > 'h' ||row< 1|| row > 8) {
 			throw new chessexception("error instanting chessposition . Valid values are from a1 to h8 ");
 		}
 		this.column = column;
